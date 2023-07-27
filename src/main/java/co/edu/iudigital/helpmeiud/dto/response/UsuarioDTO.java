@@ -12,11 +12,14 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UsuarioDTO {
+
+    Long id;
 
     String username;
 
@@ -32,5 +35,5 @@ public class UsuarioDTO {
 
     String image;
 
-    Long roleId;
+    List<String> roles;
 }

@@ -1,10 +1,9 @@
 package co.edu.iudigital.helpmeiud.controller;
 
-
-import co.edu.iudigital.helpmeiud.dto.request.DelitoDTORequest;
-import co.edu.iudigital.helpmeiud.dto.response.DelitoDTO;
+import co.edu.iudigital.helpmeiud.dto.CasoDTO;
 import co.edu.iudigital.helpmeiud.exceptions.RestException;
-import co.edu.iudigital.helpmeiud.service.iface.IDelitoService;
+import co.edu.iudigital.helpmeiud.model.Caso;
+import co.edu.iudigital.helpmeiud.service.iface.ICasoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.SwaggerDefinition;
@@ -19,44 +18,43 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/delitos")
-@Api(value = "/delitos", tags = {"Delitos"})
+@RequestMapping("/casos")
+@Api(value = "/casos", tags = {"Casos"})
 @SwaggerDefinition(tags = {
-        @Tag(name = "Delitos", description = "Gestion API Delitos")
+        @Tag(name = "Casos", description = "Gestion API Casos")
 })
-public class DelitoController {
+public class CasoController {
 
     @Autowired
-    IDelitoService delitoService;
+    private ICasoService casoService;
 
-    @ApiOperation(value = "Obtiene todos delitos",
+    @ApiOperation(value = "Obtiene todos casos",
             responseContainer = "List",
             produces = "application/json",
             httpMethod = "GET")
     @GetMapping
     @ResponseStatus(code = HttpStatus.OK)
-    public ResponseEntity<List<DelitoDTO>> index() {
+    public ResponseEntity<List<CasoDTO>> index() {
         return ResponseEntity
                 .ok()
                 .body(
-                        delitoService.consultarTodos()
+                        casoService.consultarTodos()
                 );
     }
-
-    @ApiOperation(value = "Guardar un Delito",
-            response = DelitoDTO.class,
-            responseContainer = "DelitoDTO",
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
+    @ApiOperation(value = "Crea un caso",
+            response = Caso.class,
+            responseContainer = "Caso",
             produces = "application/json",
             httpMethod = "POST")
-    @Secured("ROLE_ADMIN")
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    public ResponseEntity<DelitoDTO> create(
-            @RequestBody @Valid DelitoDTORequest delitoDTORequest
+    public ResponseEntity<Caso> create(
+            @RequestBody @Valid CasoDTO casoDTO
     ) throws RestException {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(
-                   delitoService.guardarDelito(delitoDTORequest)
+                        casoService.crear(casoDTO)
                 );
     }
 }

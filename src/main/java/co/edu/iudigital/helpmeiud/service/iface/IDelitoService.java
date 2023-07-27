@@ -2,6 +2,8 @@ package co.edu.iudigital.helpmeiud.service.iface;
 
 import co.edu.iudigital.helpmeiud.dto.request.DelitoDTORequest;
 import co.edu.iudigital.helpmeiud.dto.response.DelitoDTO;
+import co.edu.iudigital.helpmeiud.exceptions.BadRequestException;
+import co.edu.iudigital.helpmeiud.exceptions.RestException;
 
 import java.util.List;
 
@@ -25,7 +27,7 @@ public interface IDelitoService {
      * @param delitoDTORequest
      * @return
      */
-    DelitoDTO guardarDelito(DelitoDTORequest delitoDTORequest);
+    DelitoDTO guardarDelito(DelitoDTORequest delitoDTORequest) throws RestException;
 
     /**
      * Borra un Delito por su ID

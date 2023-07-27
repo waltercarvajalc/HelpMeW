@@ -16,7 +16,6 @@ import java.time.LocalDate;
 @Data
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-
 public class UsuarioDTORequest {
 
     @NotNull(message = "username obligatorio")
